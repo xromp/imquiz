@@ -1,0 +1,39 @@
+/* custom personal styles */
+
+.btn-append {
+    border-radius: 0;
+}
+
+.input-append {
+    text-align: center;
+}
+
+.btn-group button, input {
+    padding: 10px 24px; /* Some padding */
+    float: left; /* Float the buttons side by side */
+}
+.btn-group-select button {
+    padding: 10px 24px; /* Some padding */
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+/* Clear floats (clearfix hack) */
+.btn-group-select:after 
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group-select button:not(:last-child) {
+    border-bottom: none !important;
+}
+.btn-group button:not(:last-child){
+    border-left: none; /* Prevent double borders */
+}
+
+.panel-transparency {
+    background: rgba(247, 244, 244, 0.62);
+    box-shadow: 0px 0px 15px lightgrey;
+}
