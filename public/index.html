@@ -69,11 +69,14 @@
 
                     <p ng-if="lc.mode == 'DONE_ANSWERING'"><strong>You answered {{lc.noAnswered}} question(s) about yourself!</strong> Share this with someone and find out how well if he/she knows about you! Your friends' scores are always available at your Quiz Link below! </p>
 
-                    <p ng-if="lc.mode == 'START_QUESSING'"><strong>{{lc.userQuestioners.username}}</strong> has selected a few questions for you. Answer all questions and find out if you know <strong>{{lc.userQuestioners.username}}</strong> well. Good Luck!
+                    <p ng-if="lc.mode == 'START_GUESSING'"><strong>{{lc.orginUserQuestioners.username}}</strong> has selected a few questions for you. Answer all questions and find out if you know <strong>{{lc.orginUserQuestioners.username}}</strong> well. Good Luck!
+
+                    <p ng-if="lc.mode == 'DONE_GUESSING'">Good Job <strong>{{lc.userQuestioners.username}}</strong>! Say something to <strong>{{lc.orginUserQuestioners.username}}</strong> by leaving a comment below. Click here to check all score.</p>
+
                     <div class="container">
                         <div class="panel panel-default panel-transparency">
                             <div class="panel-body">
-                                <div class="row" ng-hide="lc.mode != 'INIT'">
+                                <div class="row" ng-hide="lc.showQuestions">
                                     <div class="col-md-12" style="text-align:center">
                                         <div class="btn-group">
                                             <input type="text" class="input-append" ng-model="lc.userQuestioners.username" placeholder="Enter your name (e.g John)" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -81,7 +84,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div ng-show="lc.mode == 'START_ANSWERING' || lc.mode == 'START_QUESSING'">
+                                <div ng-show="lc.showQuestions">
                                     <div ng-repeat="question in lc.userQuestioners.questions | filter: {'position':'CURRENT'}">
                                         <div class="row">
                                             <div class="col-md-12" style="text-align:center">
@@ -94,16 +97,19 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="row" ng-hide="lc.mode == 'START_QUESSING'">
+                                    <div class="row" ng-show="lc.mode == 'START_ANSWERING'">
                                         <div class="col-md-1">
                                             <button class="btn btn-danger" ng-click="lc.skipQuestion()">Skip this question >>></button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="lc.mode == 'DONE_ANSWERING'">
-                                    <div class="col-md-12" style="text-align:center">
+                                <div class="row" ng-show="lc.mode == 'DONE_ANSWERING' || lc.mode == 'DONE_GUESSING'">
+                                    <div class="col-md-12" style="text-align:center" ng-show="lc.mode == 'DONE_ANSWERING'">
                                         <p>Share this link <a id="link" href={{lc.shareLink}}>{{lc.shareLink}}</a> to your friends to know how well they know you.</p>
                                     </div>
+                                    <div class="col-md-12" style="text-align:center" ng-show="lc.mode == 'DONE_GUESSING'">
+                                            <h4 class="text-success">You know {{lc.knowPercentage}} about {{lc.orginUserQuestioners.username}}</h4>
+                                        </div>
                                     <br>
                                     <br><br>
                                     <div class="col-md-12" style="text-align:center">

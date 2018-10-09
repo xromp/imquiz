@@ -2,6 +2,7 @@
 
 .btn-append {
     border-radius: 0;
+    white-space: normal;
 }
 
 .input-append {
@@ -19,7 +20,7 @@
     width: 100%;
 }
 /* Clear floats (clearfix hack) */
-.btn-group-select:after 
+.btn-group-select:after
 .btn-group:after {
     content: "";
     clear: both;
@@ -36,4 +37,26 @@
 .panel-transparency {
     background: rgba(247, 244, 244, 0.62);
     box-shadow: 0px 0px 15px lightgrey;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+        width: 100%;
+    }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .input-append {
+        display: flex;
+        padding: .5em 1em;
+        width: 64%;
+    }
+
+    .btn-append {
+        padding: .5em 1em !important;
+        font-size:unset;
+        margin-bottom: unset;
+    }
 }
