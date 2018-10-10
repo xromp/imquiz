@@ -9,6 +9,11 @@
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
+    <meta property="og:url"                content="https://imquiz-001.firebaseapp.com" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Create a Quiz for Your Friends | Quiz to Test Friendship" />
+    <meta property="og:description"        content="Here you can create a quiz for your friends & send it and also post it in your profile. Best quiz to test friendship, best place to make and share your quiz." />
+    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
 
     <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/ct-paper.css" rel="stylesheet"/>
@@ -23,6 +28,8 @@
 
 </head>
 <body ng-controller="LandingCtrl as lc" ng-cloak>
+    <div id="fb-root"></div>
+<script></script>
     <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -33,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="www.creative-tim.com">Guesser</a>
+          <a class="navbar-brand" href="/">imQuiz</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -99,7 +106,7 @@
                                     <br>
                                     <div class="row" ng-show="lc.mode == 'START_ANSWERING'">
                                         <div class="col-md-1">
-                                            <button class="btn btn-danger" ng-click="lc.skipQuestion()">Skip this question >>></button>
+                                            <button class="btn btn-danger" ng-hide="lc.isLastNoSkip" ng-click="lc.skipQuestion()">Skip this question >>></button>
                                         </div>
                                     </div>
                                 </div>
@@ -108,24 +115,28 @@
                                         <p>Share this link <a id="link" href={{lc.shareLink}}>{{lc.shareLink}}</a> to your friends to know how well they know you.</p>
                                     </div>
                                     <div class="col-md-12" style="text-align:center" ng-show="lc.mode == 'DONE_GUESSING'">
-                                            <h4 class="text-success">You know {{lc.knowPercentage}} about {{lc.orginUserQuestioners.username}}</h4>
+                                            <h4 class="text-success">You know {{lc.knowPercentage}}% about {{lc.orginUserQuestioners.username}}</h4>
                                         </div>
                                     <br>
                                     <br><br>
                                     <div class="col-md-12" style="text-align:center">
-                                        <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on WhatsApp</button>
-                                        <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on Facebook</button>
-                                        <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on Twitter</button>
+                                        <!-- <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on WhatsApp</button> -->
+                                        <div class="fb-share-button" ng-show="fbShareLink" data-href="{{fbShareLink}}"  data-layout="button" data-size="large" data-mobile-iframe="true">
+                                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{encodeURIComponent(fbShareLink)}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                                        </div>
+                                        <!-- <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on Twitter</button> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            <span class="dot" ng-repeat="score in lc.quesser"><br><strong class="text-success">{{score.score}}%</strong><br><small>{{score.name}}</small></span>
+
             </div>
         </div>
         <div class="main">
-            <div class="section text-center landing-section">
+            <!-- <div class="section text-center landing-section">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -136,9 +147,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="section section-light-brown landing-section">
+            <!-- <div class="section section-light-brown landing-section">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 column">
@@ -158,9 +169,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="section section-dark text-center landing-section">
+            <!-- <div class="section section-dark text-center landing-section">
                 <div class="container">
                     <h2>Let's talk about us</h2>
                     <div class="col-md-4">
@@ -185,9 +196,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="section landing-section">
+            <!-- <div class="section landing-section">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -215,38 +226,26 @@
                     </div>
 
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <footer class="footer-demo section-dark">
         <div class="container">
             <nav class="pull-left">
-                <ul>
-
-                    <li>
-                        <a href="http://www.creative-tim.com">
-                            Creative Tim
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://blog.creative-tim.com">
-                           Blog
-                        </a>
-                    </li>
+                <!-- <ul>
                     <li>
                         <a href="http://www.creative-tim.com/product/rubik">
                             Licenses
                         </a>
                     </li>
-                </ul>
+                </ul> -->
             </nav>
             <div class="copyright pull-right">
-                &copy; 2015, made with <i class="fa fa-heart heart"></i> by Creative Tim
+                &copy; 2018, made by @xromp024 <i class="fa fa-heart heart"></i> using Creative Tim
             </div>
         </div>
     </footer>
-
 </body>
 
 <script src="../assets/js/jquery-1.10.2.js" type="text/javascript"></script>

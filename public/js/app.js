@@ -8,21 +8,23 @@
         let vm = this;
         const DOMAIN = 'https://imquiz-001.firebaseio.com';
         const HOSTED_DOMAIN = 'https://imquiz-001.firebaseapp.com/';
+        const ref = firebase.database().ref();
+        const questionRef = ref.child('user-answered-questions');
         vm.shareLink = '';
         vm.mode = 'START_ANSWERING';
-        // vm.mode = 'DONE_GUESSING';
 
         vm.init = function(){
-            const userQuestionsId = $location.$$absUrl.split('/')[3];
-            if (userQuestionsId) {
-                const req =new Request(DOMAIN+'/user-answered-questions/'+userQuestionsId+'.json', {method:'GET'});
+            vm.userQuestionsId = $location.$$absUrl.split('/')[3];
+            const isValid = vm.userQuestionsId.includes('-imQuiz');
+            if (vm.userQuestionsId && isValid) {
+                const req =new Request(DOMAIN+'/user-answered-questions/'+vm.userQuestionsId+'.json', {method:'GET'});
                 fetch(req)
                     .then(response => {
                         response.json().then(data => {
-                            console.log(data);
                             if (data) {
                                 vm.mode = 'START_GUESSING';
                                 vm.userQuestioners = data;
+                                vm.quesser = vm.userQuestioners.quessers;
                                 vm.orginUserQuestioners = angular.copy(data);
                                 vm.userQuestioners.questions.map( subarray => {
                                     subarray.position = 'PENDING';
@@ -31,6 +33,8 @@
                                 vm.userQuestioners.username = '';
                                 vm.userQuestioners.questions[0]['position'] = 'CURRENT';
                                 $scope.$apply();
+                            } else {
+                                vm.mode = 'START_ANSWERING';
                             }
                         })
                     });
@@ -46,7 +50,6 @@
                     vm.userQuestioners.questions = vm.initQuestions();
                     vm.userQuestioners.questions[0].position = 'CURRENT';
                     vm.userQuestioners.username = name;
-                    console.log(vm.userQuestioners);
                 }
 
             }
@@ -61,16 +64,21 @@
 
         vm.getNextQuestion = function() {
             let isCompleted = false;
+            let lastQuestion = false;
             vm.userQuestioners.questions.some((question, i) => {
                 if (question.position == 'PENDING') {
                     return question.position = 'CURRENT';
                 } else if (i == vm.userQuestioners.questions.length -1 && question.position != 'PENDING') {
                     isCompleted = true;
                 }
+
+                if (i == vm.userQuestioners.questions.length -2) lastQuestion = true;
             });
-            console.log(vm.userQuestioners.questions);
             const answered = vm.userQuestioners.questions.filter(item => item.answered);
             const ansCount = answered.length;
+
+            if (lastQuestion && !ansCount) return vm.isLastNoSkip= true;
+
             if (isCompleted && ansCount) {
                 if (vm.mode == 'START_ANSWERING') {
                     vm.mode = 'DONE_ANSWERING';
@@ -78,6 +86,7 @@
                     vm.submit();
                 } else if (vm.mode == 'START_GUESSING') {
                     vm.compute();
+                    vm.submitQuesser();
                     vm.mode = 'DONE_GUESSING';
                 }
             }
@@ -103,19 +112,39 @@
         };
 
         vm.submit = function(){
-            const ref = firebase.database().ref();
-            const questionRef = ref.child('user-answered-questions');
             const formData = vm.userQuestioners;
             const answeredData = vm.userQuestioners.questions.filter(item => item.answered);
             formData.questions = answeredData;
             const data = angular.copy(formData);
-            console.log(data);
-            questionRef.push(data).then((snap) => {
-                const key = snap.key
+            const key = ref.push().key + '-imQuiz';
+            questionRef.child(key).set(data).then(() => {
                 vm.shareLink = HOSTED_DOMAIN+key;
+                $scope.fbShareLink = vm.shareLink;
                 $scope.$apply();
+                (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=137973710136662&autoLogAppEvents=1';
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
             });
         };
+        vm.submitQuesser = function() {
+            let data = {
+                name: vm.userQuestioners.username,
+                score: vm.knowPercentage
+            }
+            questionRef.child(vm.userQuestionsId+'/quessers').push(data);
+            $scope.fbShareLink = $location.$$absUrl;
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=137973710136662&autoLogAppEvents=1';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        }
 
         vm.compute = function(){
            const origAnsCount = vm.orginUserQuestioners.questions.length;
@@ -131,7 +160,7 @@
                 (userOptid[0].id == origOptid[0].id) ? quessAnsCount+=1 :'';
 
            });
-           vm.knowPercentage = ((quessAnsCount/origAnsCount)*100).toFixed(2) + '%';
+           vm.knowPercentage = ((quessAnsCount/origAnsCount)*100).toFixed(2);
            const ref = firebase.database().ref();
            const questionRef = ref.child('user-answered-questions');
         };
@@ -174,3 +203,4 @@
         }
     }
 })();
+//https%3A%2F%2Fimquiz-001.firebaseapp.com%2F-LOTn7P0Tj45rNbInQXy-imQuiz
