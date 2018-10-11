@@ -110,7 +110,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="lc.mode == 'DONE_ANSWERING' || lc.mode == 'DONE_GUESSING'">
+
+                                <div class="row" ng-show="lc.display.loading && !lc.display.loaded">
+                                    <img src="/assets/img/loading/loading.gif" style="
+                                    display: block;
+                                    margin-left: auto;
+                                    margin-right: auto;">
+                                </div>
+                                <div class="row" ng-show="(lc.mode == 'DONE_ANSWERING' || lc.mode == 'DONE_GUESSING') && lc.display.loaded">
                                     <div class="col-md-12" style="text-align:center" ng-show="lc.mode == 'DONE_ANSWERING'">
                                         <p>Share this link <a id="link" href={{lc.shareLink}}>{{lc.shareLink}}</a> to your friends to know how well they know you.</p>
                                     </div>

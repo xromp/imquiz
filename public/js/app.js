@@ -10,6 +10,7 @@
         const HOSTED_DOMAIN = 'https://imquiz-001.firebaseapp.com/';
         const ref = firebase.database().ref();
         const questionRef = ref.child('user-answered-questions');
+        vm.display = {};
         vm.shareLink = '';
         vm.mode = 'START_ANSWERING';
 
@@ -80,6 +81,8 @@
             if (lastQuestion && !ansCount) return vm.isLastNoSkip= true;
 
             if (isCompleted && ansCount) {
+                vm.display.loading = true;
+                vm.display.loaded = false;
                 if (vm.mode == 'START_ANSWERING') {
                     vm.mode = 'DONE_ANSWERING';
                     vm.noAnswered = vm.getAnsweredQuestions();
@@ -127,6 +130,9 @@
                     js = d.createElement(s); js.id = id;
                     js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=137973710136662&autoLogAppEvents=1';
                     fjs.parentNode.insertBefore(js, fjs);
+                    vm.display.loading = false;
+                    vm.display.loaded = true;
+                    $scope.$apply();
                 }(document, 'script', 'facebook-jssdk'));
             });
         };
@@ -143,6 +149,9 @@
                 js = d.createElement(s); js.id = id;
                 js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=137973710136662&autoLogAppEvents=1';
                 fjs.parentNode.insertBefore(js, fjs);
+                vm.display.loading = false;
+                vm.display.loaded = true;
+                $scope.$apply();
             }(document, 'script', 'facebook-jssdk'));
         }
 
