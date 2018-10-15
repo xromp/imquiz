@@ -66,7 +66,8 @@
                 <a href="#" target="_blank" class="btn btn-simple"><i class="fa fa-facebook"></i></a>
             </li>
            </ul>
-        </div><!-- /.navbar-collapse -->
+        </div>
+        <!-- /.navbar-collapse -->
       </div><!-- /.container-->
     </nav>
     <div class="alert alert-danger landing-alert">
@@ -80,16 +81,17 @@
         <div class="landing-header">
             <div class="container">
                 <div class="motto">
-                    <p ng-if="lc.mode == 'START_ANSWERING' || lc.mode == 'INIT'"><strong>Find out who knows you best! </strong> You must choose a series of questions to answer, then share it with anyone and find out how well if he/she knows about you.</p>
-
-                    <p ng-if="lc.mode == 'DONE_ANSWERING'"><strong>You answered {{lc.noAnswered}} question(s) about yourself!</strong> Share this with someone and find out how well if he/she knows about you! Your friends' scores are always available at your Quiz Link below! </p>
-
-                    <p ng-if="lc.mode == 'START_GUESSING'"><strong>{{lc.orginUserQuestioners.username}}</strong> has selected a few questions for you. Answer all questions and find out if you know <strong>{{lc.orginUserQuestioners.username}}</strong> well. Good Luck!
-
-                    <p ng-if="lc.mode == 'DONE_GUESSING'">Good Job <strong>{{lc.userQuestioners.username}}</strong>! Say something to <strong>{{lc.orginUserQuestioners.username}}</strong> by leaving a comment below. Click here to check all score.</p>
-
-                    <div class="container">
+                    <div class="container col-md-8">
                         <div class="panel panel-default panel-transparency">
+                            <div class="panel-heading">
+                                <p ng-if="lc.mode == 'START_ANSWERING' || lc.mode == 'INIT'"><strong>Find out who knows you best! </strong> You must choose a series of questions to answer, then share it with anyone and find out how well if he/she knows about you.</p>
+
+                                <p ng-if="lc.mode == 'DONE_ANSWERING'"><strong>You answered {{lc.noAnswered}} question(s) about yourself!</strong> Share this with someone and find out how well if he/she knows about you! Your friends' scores are always available at your Quiz Link below! </p>
+
+                                <p ng-if="lc.mode == 'START_GUESSING'"><strong>{{lc.orginUserQuestioners.username}}</strong> has selected a few questions for you. Answer all questions and find out if you know <strong>{{lc.orginUserQuestioners.username}}</strong> well. Good Luck!
+
+                                <p ng-if="lc.mode == 'DONE_GUESSING'">Good Job <strong>{{lc.userQuestioners.username}}</strong>! Say something to <strong>{{lc.orginUserQuestioners.username}}</strong> by leaving a comment below. Click here to check all score.</p>
+                            </div>
                             <div class="panel-body">
                                 <div class="row" ng-hide="lc.showQuestions">
                                     <div class="col-md-12" style="text-align:center">
@@ -145,55 +147,74 @@
                             </div>
                         </div>
                     </div>
+                    <div class="container col-md-4">
+                            <div class="panel panel-default panel-transparency">
+                                <div class="panel-body">
+                                    <p><button class="btn btn-success btn-append btn-full-width" style="width:100%" data-toggle="collapse" href="#howToPlay" role="button" aria-expanded="false" aria-controls="howToPlay">How to Play? <i class="fa fa-chevron-right"></i></button></p>
+                                    <div class="collapse" id="howToPlay">
+                                        <div class="card card-body">
+                                            <p>
+                                                <small>(1) You can begin the quiz by entering your name and tapping 'Start!'.
+                                                You must then start choosing an answer for the questions provided.
+                                                You may even consider changing the question by tapping on the 'change question' button.
+                                                After completing all the questions you can choose to share the link to anyone.
+                                                </small>
+                                            </p>
+                                            <p>
+                                                <small>(2) The person with your shared link may then use that and start answering the quiz you just created,
+                                                finding out how well if he/she knows about you in the end.
+                                                </small>
+                                            </p>
+                                            <p>
+                                                <small>(3) Find out who answered your quiz and their score by going to the link you intially created.</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p><button class="btn btn-info btn-append btn-full-width" style="width:100%" data-toggle="collapse" href="#about" role="button" aria-expanded="false" aria-controls="about">About <i class="fa fa-chevron-right"></i></button></p>
+                                    <div class="collapse" id="about">
+                                        <div class="card card-body">
+                                                <p>
+                                                    <small>
+                                                        You may think you know everything about someone, whether it is your partner or your best friend.
+                                                        But we don't know them completely. Think of this as a friendship quiz. <br>
+                                                        Make a Quiz, Send it to Your Friends or Post it in your Profile! Ask your friends "how well do you know me?"
+                                                        and find out who knows you best.<br>
+                                                        Choose a range of questions to even help you with your relationships and transform this online quiz maker into a dating quiz.
+                                                        Does my partner really know me? Quiz your friends and find out!
+                                                        These love tests and personality quizzes help you with your love and relationship issues.<br>
+                                                        IMQUIZ helps identify solutions to social problems by creating tools and activities that open up a world of possibilities.
+                                                        Quiz your friends now!<br>
+                                                    </small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <p><button class="btn btn-primary btn-append btn-full-width" style="width:100%" data-toggle="collapse" href="#termsOfService" role="button" aria-expanded="false" aria-controls="termsOfService">Terms of Service <i class="fa fa-chevron-right"></i></button></p>
+                                    <div class="collapse" id="termsOfService">
+                                        <div class="card card-body">
+                                                <p>
+                                                    <small>
+                                                        You may think you know everything about someone, whether it is your partner or your best friend.
+                                                        But we don't know them completely. Think of this as a friendship quiz. <br>
+                                                        Make a Quiz, Send it to Your Friends or Post it in your Profile! Ask your friends "how well do you know me?"
+                                                        and find out who knows you best.<br>
+                                                        Choose a range of questions to even help you with your relationships and transform this online quiz maker into a dating quiz.
+                                                        Does my partner really know me? Quiz your friends and find out!
+                                                        These love tests and personality quizzes help you with your love and relationship issues.<br>
+                                                        IMQUIZ helps identify solutions to social problems by creating tools and activities that open up a world of possibilities.
+                                                        Quiz your friends now!<br>
+                                                    </small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                 </div>
             <span class="dot" ng-repeat="score in lc.quesser"><br><strong class="text-success">{{score.score}}%</strong><br><small>{{score.name}}</small></span>
 
             </div>
         </div>
         <div class="main">
-            <!-- <div class="section text-center landing-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <h2>Featured Quizzes</h2>
-                            <h5>This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn't scroll to get here. Add a button if you want the user to see more.</h5>
-                            <br />
-                            <a href="#" class="btn btn-danger btn-fill">See Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="section section-light-brown landing-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 column">
-                            <h4>How to Play?</h4>
-                            <ul>
-                                <li>You can begin the quiz by entering your name and tapping 'Start!'. You must then start choosing an answer for the questions provided. You may even consider changing the question by tapping on the 'change question' button. After completing all the questions you can choose to share the link to anyone.</li>
-                            </ul>
-                            <a class="btn btn-danger btn-simple" href="#">See more <i class="fa fa-chevron-right"></i></a>
-
-                        </div>
-                        <div class="col-md-4 column">
-                            <h4>About</h4>
-                            <p>
-                            You may think you know everything about someone, whether it is your partner or your best friend. But we don't know them completely. Think of this as a friendship quiz.
-                            Make a Quiz, Send it to Your Friends or Post it in your Profile! Ask your friends "how well do you know me?" and find out who knows you best.
-                            Choose a range of questions to even help you with your
-                            <a class="btn btn-danger btn-simple" href="#">See more <i class="fa fa-chevron-right"></i></a>
-                            <!-- relationships and transform this online quiz maker into a dating quiz. Does my partner really know me? Quiz your friends and find out! These love tests and personality quizzes help you with your love and relationship issues.
-                            IMQUIZ helps identify solutions to social problems by creating tools and activities that open up a world of possibilities. Quiz your friends now!</p> -->
-
-                        </div>
-                        <div class="col-md-4 column">
-                            <h4>Third Attribute</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
-                            <a class="btn btn-danger btn-simple" href="#">See more <i class="fa fa-chevron-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="section section-dark text-center landing-section">
                 <div class="container">
