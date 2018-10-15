@@ -33,10 +33,10 @@
         enable_page_level_ads: true
     });
     </script>
+    <base href="/">
 </head>
-<body ng-controller="LandingCtrl as lc" ng-cloak>
+<body>
     <div id="fb-root"></div>
-<script></script>
     <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,24 +47,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">imQuiz</a>
+          <a class="navbar-brand" href="/">IMQuiz</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-example-2">
           <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#" class="btn btn-simple">Play</a>
+                <a href="/" class="btn btn-simple">Play</a>
             </li>
             <li>
-                <a href="#" class="btn btn-simple">Quiz Maker</a>
+                <a href="#" ui-sref="tos" class="btn btn-simple">Terms Of Service</a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="#" target="_blank" class="btn btn-simple"><i class="fa fa-twitter"></i></a>
             </li>
             <li>
                 <a href="#" target="_blank" class="btn btn-simple"><i class="fa fa-facebook"></i></a>
-            </li>
+            </li> -->
            </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -77,202 +77,7 @@
     </div>
 
     <div class="wrapper">
-        <!-- <div class="landing-header" style="background-image: url('../assets/paper_img/cat.jpg');"> -->
-        <div class="landing-header">
-            <div class="container">
-                <div class="motto">
-                    <div class="container col-md-8">
-                        <div class="panel panel-default panel-transparency">
-                            <div class="panel-heading">
-                                <p ng-if="lc.mode == 'START_ANSWERING' || lc.mode == 'INIT'"><strong>Find out who knows you best! </strong> You must choose a series of questions to answer, then share it with anyone and find out how well if he/she knows about you.</p>
-
-                                <p ng-if="lc.mode == 'DONE_ANSWERING'"><strong>You answered {{lc.noAnswered}} question(s) about yourself!</strong> Share this with someone and find out how well if he/she knows about you! Your friends' scores are always available at your Quiz Link below! </p>
-
-                                <p ng-if="lc.mode == 'START_GUESSING'"><strong>{{lc.orginUserQuestioners.username}}</strong> has selected a few questions for you. Answer all questions and find out if you know <strong>{{lc.orginUserQuestioners.username}}</strong> well. Good Luck!
-
-                                <p ng-if="lc.mode == 'DONE_GUESSING'">Good Job <strong>{{lc.userQuestioners.username}}</strong>! Say something to <strong>{{lc.orginUserQuestioners.username}}</strong> by leaving a comment below. Click here to check all score.</p>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row" ng-hide="lc.showQuestions">
-                                    <div class="col-md-12" style="text-align:center">
-                                        <div class="btn-group">
-                                            <input type="text" class="input-append" ng-model="lc.userQuestioners.username" placeholder="Enter your name (e.g John)" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                            <button class="btn btn-outline-secondary btn-append" type="button" ng-click="lc.startAnswer(lc.userQuestioners.username)">Start!</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div ng-show="lc.showQuestions">
-                                    <div ng-repeat="question in lc.userQuestioners.questions | filter: {'position':'CURRENT'}">
-                                        <div class="row">
-                                            <div class="col-md-12" style="text-align:center">
-                                                <h5 ng-bind="question.desc"><hr>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="btn-group-select">
-                                            <button class="btn btn-append" type="button" ng-class="{'active':option.selected}" ng-repeat="option in question.options" ng-click="lc.selected(option, question)" ng-bind="option.desc"></button>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row" ng-show="lc.mode == 'START_ANSWERING' && !lc.display.loading">
-                                        <div class="col-md-1">
-                                            <button class="btn btn-danger" ng-hide="lc.isLastNoSkip" ng-click="lc.skipQuestion()">Skip this question >>></button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row" ng-show="lc.display.loading && !lc.display.loaded">
-                                    <img src="/assets/img/loading/loading.gif" style="
-                                    display: block;
-                                    margin-left: auto;
-                                    margin-right: auto;">
-                                </div>
-                                <div class="row" ng-show="(lc.mode == 'DONE_ANSWERING' || lc.mode == 'DONE_GUESSING') && lc.display.loaded">
-                                    <div class="col-md-12" style="text-align:center" ng-show="lc.mode == 'DONE_ANSWERING'">
-                                        <p>Share this link <a id="link" href={{lc.shareLink}}>{{lc.shareLink}}</a> to your friends to know how well they know you.</p>
-                                    </div>
-                                    <div class="col-md-12" style="text-align:center" ng-show="lc.mode == 'DONE_GUESSING'">
-                                            <h4 class="text-success">You know {{lc.knowPercentage}}% about {{lc.orginUserQuestioners.username}}</h4>
-                                        </div>
-                                    <br>
-                                    <br><br>
-                                    <div class="col-md-12" style="text-align:center">
-                                        <!-- <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on WhatsApp</button> -->
-                                        <div class="fb-share-button" ng-show="fbShareLink" data-href="{{fbShareLink}}"  data-layout="button" data-size="large" data-mobile-iframe="true">
-                                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{encodeURIComponent(fbShareLink)}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
-                                        </div>
-                                        <!-- <button class="btn btn-danger" ng-click="lc.skipQuestion()">Share on Twitter</button> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container col-md-4">
-                            <div class="panel panel-default panel-transparency">
-                                <div class="panel-body">
-                                    <p><button class="btn btn-success btn-append btn-full-width" style="width:100%" data-toggle="collapse" href="#howToPlay" role="button" aria-expanded="false" aria-controls="howToPlay">How to Play? <i class="fa fa-chevron-right"></i></button></p>
-                                    <div class="collapse" id="howToPlay">
-                                        <div class="card card-body">
-                                            <p>
-                                                <small>(1) You can begin the quiz by entering your name and tapping 'Start!'.
-                                                You must then start choosing an answer for the questions provided.
-                                                You may even consider changing the question by tapping on the 'change question' button.
-                                                After completing all the questions you can choose to share the link to anyone.
-                                                </small>
-                                            </p>
-                                            <p>
-                                                <small>(2) The person with your shared link may then use that and start answering the quiz you just created,
-                                                finding out how well if he/she knows about you in the end.
-                                                </small>
-                                            </p>
-                                            <p>
-                                                <small>(3) Find out who answered your quiz and their score by going to the link you intially created.</small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p><button class="btn btn-info btn-append btn-full-width" style="width:100%" data-toggle="collapse" href="#about" role="button" aria-expanded="false" aria-controls="about">About <i class="fa fa-chevron-right"></i></button></p>
-                                    <div class="collapse" id="about">
-                                        <div class="card card-body">
-                                                <p>
-                                                    <small>
-                                                        You may think you know everything about someone, whether it is your partner or your best friend.
-                                                        But we don't know them completely. Think of this as a friendship quiz. <br>
-                                                        Make a Quiz, Send it to Your Friends or Post it in your Profile! Ask your friends "how well do you know me?"
-                                                        and find out who knows you best.<br>
-                                                        Choose a range of questions to even help you with your relationships and transform this online quiz maker into a dating quiz.
-                                                        Does my partner really know me? Quiz your friends and find out!
-                                                        These love tests and personality quizzes help you with your love and relationship issues.<br>
-                                                        IMQUIZ helps identify solutions to social problems by creating tools and activities that open up a world of possibilities.
-                                                        Quiz your friends now!<br>
-                                                    </small>
-                                                </p>
-                                        </div>
-                                    </div>
-                                    <p><button class="btn btn-primary btn-append btn-full-width" style="width:100%" data-toggle="collapse" href="#termsOfService" role="button" aria-expanded="false" aria-controls="termsOfService">Terms of Service <i class="fa fa-chevron-right"></i></button></p>
-                                    <div class="collapse" id="termsOfService">
-                                        <div class="card card-body">
-                                                <p>
-                                                    <small>
-                                                        You may think you know everything about someone, whether it is your partner or your best friend.
-                                                        But we don't know them completely. Think of this as a friendship quiz. <br>
-                                                        Make a Quiz, Send it to Your Friends or Post it in your Profile! Ask your friends "how well do you know me?"
-                                                        and find out who knows you best.<br>
-                                                        Choose a range of questions to even help you with your relationships and transform this online quiz maker into a dating quiz.
-                                                        Does my partner really know me? Quiz your friends and find out!
-                                                        These love tests and personality quizzes help you with your love and relationship issues.<br>
-                                                        IMQUIZ helps identify solutions to social problems by creating tools and activities that open up a world of possibilities.
-                                                        Quiz your friends now!<br>
-                                                    </small>
-                                                </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-            <span class="dot" ng-repeat="score in lc.quesser"><br><strong class="text-success">{{score.score}}%</strong><br><small>{{score.name}}</small></span>
-
-            </div>
-        </div>
-        <div class="main">
-
-            <div class="section section-dark text-center landing-section">
-                <div class="container">
-                    <h2>Featured Quizzes</h2>
-                    <div class="col-md-4">
-                        <div class="team-player">
-                            <img src="../assets/paper_img/chet_faker_2.jpg" alt="Thumbnail Image" class="img-circle img-responsive">
-                            <h5>Chet Faker <br /><small class="text-muted">Music</small></h5>
-                            <p>You can write here details about one of your team members. You can give more details about what they do. Feel free to add some <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="team-player">
-                            <img src="../assets/paper_img/flume.jpg" alt="Thumbnail Image" class="img-circle img-responsive">
-                            <h5>Flume <br /><small class="text-muted">Production</small></h5>
-                            <p>You can write here details about one of your team members. You can give more details about what they do. Feel free to add some <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="team-player">
-                            <img src="../assets/paper_img/banks.jpg" alt="Thumbnail Image" class="img-circle img-circle img-responsive">
-                            <h5>Banks <br /><small class="text-muted">Music</small></h5>
-                            <p>You can write here details about one of your team members. You can give more details about what they do. Feel free to add some <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section landing-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <h2 class="text-center">Keep in touch?</h2>
-                            <form class="contact-form">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Name</label>
-                                        <input class="form-control" placeholder="Name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Email</label>
-                                        <input class="form-control" placeholder="Email">
-                                    </div>
-                                </div>
-                                <label>Message</label>
-                                <textarea class="form-control" rows="4" placeholder="Tell us your thoughts and feelings..."></textarea>
-                                <div class="row">
-                                    <div class="col-md-4 col-md-offset-4">
-                                        <button class="btn btn-danger btn-block btn-lg btn-fill">Send Message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        <div ui-view></div>
     </div>
 
     <footer class="footer-demo section-dark">
@@ -316,6 +121,7 @@
   firebase.initializeApp(config);
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.min.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 <script src="js/app.js"></script>
 </html>

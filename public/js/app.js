@@ -1,21 +1,41 @@
 (function(){
     angular
-      .module('quizApp',['firebase'])
+      .module('quizApp',['firebase', 'ui.router'])
       .controller('LandingCtrl', LandingCtrl)
+      .controller('TOSCtrl', TOSCtrl)
+      .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+        $locationProvider.html5Mode(true);
+        $urlRouterProvider.otherwise('/home/play');
+        $stateProvider
+            .state('home', {
+                url: '/home/:id',
+                templateUrl: 'imquiz.html',
+                controller: LandingCtrl
+            })
+            .state('tos', {
+                url: '/tos',
+                templateUrl: 'terms.html',
+                controller: TOSCtrl
 
-    LandingCtrl.$inject = ['$scope', '$location'];
-    function LandingCtrl($scope, $location){
+            });
+
+    });
+
+    LandingCtrl.$inject = ['$scope', '$location', '$stateParams'];
+    function LandingCtrl($scope, $location, $stateParams){
         let vm = this;
         const DOMAIN = 'https://imquiz-001.firebaseio.com';
         const HOSTED_DOMAIN = 'https://imquiz-001.firebaseapp.com/';
+        const HOME_PAGE = HOSTED_DOMAIN + 'home/';
         const ref = firebase.database().ref();
         const questionRef = ref.child('user-answered-questions');
         vm.display = {};
         vm.shareLink = '';
         vm.mode = 'START_ANSWERING';
+        vm.domain = HOSTED_DOMAIN;
 
         vm.init = function(){
-            vm.userQuestionsId = $location.$$absUrl.split('/')[3];
+            vm.userQuestionsId = $stateParams.id;
             const isValid = vm.userQuestionsId.includes('-imQuiz');
             if (vm.userQuestionsId && isValid) {
                 const req =new Request(DOMAIN+'/user-answered-questions/'+vm.userQuestionsId+'.json', {method:'GET'});
@@ -119,7 +139,7 @@
             const data = angular.copy(formData);
             const key = ref.push().key + '-imQuiz';
             questionRef.child(key).set(data).then(() => {
-                vm.shareLink = HOSTED_DOMAIN+key;
+                vm.shareLink = HOME_PAGE+key;
                 $scope.fbShareLink = vm.shareLink;
                 //$scope.$apply();
                 (function(d, s, id) {
@@ -135,6 +155,7 @@
                 }(document, 'script', 'facebook-jssdk'));
             });
         };
+
         vm.submitQuesser = function() {
             let data = {
                 name: vm.userQuestioners.username,
@@ -153,7 +174,7 @@
                 vm.mode = 'DONE_GUESSING';
                 $scope.$apply();
             }(document, 'script', 'facebook-jssdk'));
-        }
+        };
 
         vm.compute = function(){
            const origAnsCount = vm.orginUserQuestioners.questions.length;
@@ -210,6 +231,63 @@
 
             return randomQuestions;
         }
+
+        vm.sendMail = function(a){
+            console.log(a.toEmail);
+            var mailJSON ={
+                "key": "xxxxxxxxxxxxxxxxxxxxxxx",
+                "message": {
+                  "html": ""+a.mailBody,
+                  "text": ""+a.mailBody,
+                  "subject": ""+a.subject,
+                  "from_email": "sender@sending.domain.com",
+                  "from_name": "Support",
+                  "to": [
+                    {
+                      "email": ""+a.toEmail,
+                      "name": "John Doe",
+                      "type": "to"
+                    }
+                  ],
+                  "important": false,
+                  "track_opens": null,
+                  "track_clicks": null,
+                  "auto_text": null,
+                  "auto_html": null,
+                  "inline_css": null,
+                  "url_strip_qs": null,
+                  "preserve_recipients": null,
+                  "view_content_link": null,
+                  "tracking_domain": null,
+                  "signing_domain": null,
+                  "return_path_domain": null
+                },
+                "async": false,
+                "ip_pool": "Main Pool"
+            };
+            var apiURL = "https://mandrillapp.com/api/1.0/messages/send.json";
+            $http.post(apiURL, mailJSON).
+              success(function(data, status, headers, config) {
+                alert('successful email send.');
+                $scope.form={};
+                console.log('successful email send.');
+                console.log('status: ' + status);
+                console.log('data: ' + data);
+                console.log('headers: ' + headers);
+                console.log('config: ' + config);
+              }).error(function(data, status, headers, config) {
+                console.log('error sending email.');
+                console.log('status: ' + status);
+              });
+          }
+    }
+
+    TOSCtrl.$inject = ['$scope', '$location'];
+    function TOSCtrl($scope, $location) {
+        let vm = this;
+        const DOMAIN = 'https://imquiz-001.firebaseapp.com';
+
+        vm.domain = DOMAIN;
     }
 })();
 //https%3A%2F%2Fimquiz-001.firebaseapp.com%2F-LOTn7P0Tj45rNbInQXy-imQuiz
