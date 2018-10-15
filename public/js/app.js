@@ -84,13 +84,11 @@
                 vm.display.loading = true;
                 vm.display.loaded = false;
                 if (vm.mode == 'START_ANSWERING') {
-                    vm.mode = 'DONE_ANSWERING';
                     vm.noAnswered = vm.getAnsweredQuestions();
                     vm.submit();
                 } else if (vm.mode == 'START_GUESSING') {
                     vm.compute();
                     vm.submitQuesser();
-                    vm.mode = 'DONE_GUESSING';
                 }
             }
         };
@@ -123,13 +121,14 @@
             questionRef.child(key).set(data).then(() => {
                 vm.shareLink = HOSTED_DOMAIN+key;
                 $scope.fbShareLink = vm.shareLink;
-                $scope.$apply();
+                //$scope.$apply();
                 (function(d, s, id) {
                     var js, fjs = d.getElementsByTagName(s)[0];
                     if (d.getElementById(id)) return;
                     js = d.createElement(s); js.id = id;
                     js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=137973710136662&autoLogAppEvents=1';
                     fjs.parentNode.insertBefore(js, fjs);
+                    vm.mode = 'DONE_ANSWERING';
                     vm.display.loading = false;
                     vm.display.loaded = true;
                     $scope.$apply();
@@ -151,6 +150,7 @@
                 fjs.parentNode.insertBefore(js, fjs);
                 vm.display.loading = false;
                 vm.display.loaded = true;
+                vm.mode = 'DONE_GUESSING';
                 $scope.$apply();
             }(document, 'script', 'facebook-jssdk'));
         }

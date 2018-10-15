@@ -13,7 +13,7 @@
     <meta property="og:type"               content="article" />
     <meta property="og:title"              content="Create a Quiz for Your Friends | Quiz to Test Friendship" />
     <meta property="og:description"        content="Here you can create a quiz for your friends & send it and also post it in your profile. Best quiz to test friendship, best place to make and share your quiz." />
-    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+    <meta property="og:image"              content="https://ichef.bbci.co.uk/images/ic/800xn/p05pb4s9.jpg"/>
 
     <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/ct-paper.css" rel="stylesheet"/>
@@ -22,6 +22,7 @@
     <link href="../assets/custom.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
+    <link rel='shortcut icon' type='image/x-icon' href='../assets/img/quiz.ico' />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -45,7 +46,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-example-2">
-          <ul class="nav navbar-nav navbar-right">
+          <!-- <ul class="nav navbar-nav navbar-right">
             <li>
                 <a href="#" class="btn btn-simple">Play</a>
             </li>
@@ -58,7 +59,7 @@
             <li>
                 <a href="#" target="_blank" class="btn btn-simple"><i class="fa fa-facebook"></i></a>
             </li>
-           </ul>
+           </ul> -->
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
     </nav>
@@ -69,7 +70,8 @@
     </div>
 
     <div class="wrapper">
-        <div class="landing-header" style="background-image: url('../assets/paper_img/cat.jpg');">
+        <!-- <div class="landing-header" style="background-image: url('../assets/paper_img/cat.jpg');"> -->
+        <div class="landing-header">
             <div class="container">
                 <div class="motto">
                     <p ng-if="lc.mode == 'START_ANSWERING' || lc.mode == 'INIT'"><strong>Find out who knows you best! </strong> You must choose a series of questions to answer, then share it with anyone and find out how well if he/she knows about you.</p>
@@ -104,7 +106,7 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="row" ng-show="lc.mode == 'START_ANSWERING'">
+                                    <div class="row" ng-show="lc.mode == 'START_ANSWERING' && !lc.display.loading">
                                         <div class="col-md-1">
                                             <button class="btn btn-danger" ng-hide="lc.isLastNoSkip" ng-click="lc.skipQuestion()">Skip this question >>></button>
                                         </div>
@@ -285,5 +287,5 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 <script src="js/app.js"></script>
-
+<script src="js/f.js"></script>
 </html>
