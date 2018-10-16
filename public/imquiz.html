@@ -11,6 +11,16 @@
                         <p ng-if="lc.mode == 'START_GUESSING'"><strong>{{lc.orginUserQuestioners.username}}</strong> has selected a few questions for you. Answer all questions and find out if you know <strong>{{lc.orginUserQuestioners.username}}</strong> well. Good Luck!
 
                         <p ng-if="lc.mode == 'DONE_GUESSING'">Good Job <strong>{{lc.userQuestioners.username}}</strong>! Say something to <strong>{{lc.orginUserQuestioners.username}}</strong> by leaving a comment below. Click here to check all score.</p>
+                        <p >
+                            <div class="row" ng-if="lc.mode == 'START_DEFINED'" style="text-align: center">
+                                <div class="col-md-3">
+                                    <img src="{{lc.userQuestioners.imageUrl}}" alt="Thumbnail Image" class="img-circle img-responsive" style="height: 120px;width: 120px;margin: 0 auto;">
+                                </div>
+                                <div class="col-md-9">
+                                    <strong>{{lc.userQuestioners.title}}</strong> <br> <small>{{lc.userQuestioners.description}} </small>
+                                </div>
+                            </div>
+                        </p>
                     </div>
                     <div class="panel-body">
                         <div class="row" ng-hide="lc.showQuestions">
@@ -40,7 +50,9 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row" ng-show="lc.userQuestioners.definedResult.show">
+                            <p ng-bind="lc.userQuestioners.definedResult.percentage +'% - '+ lc.userQuestioners.definedResult.desc" style="text-align:center"></p>
+                        </div>
                         <div class="row" ng-show="lc.display.loading && !lc.display.loaded">
                             <img src="/assets/img/loading/loading.gif" style="
                             display: block;
@@ -128,41 +140,22 @@
           </div>
         </div>
     </div>
-</div>
-<div class="main">
-    <div class="section section-dark text-center landing-section">
-        <div class="container">
-            <h2>Featured Quizzes</h2>
-            <div class="col-md-4">
-                <div class="team-player">
-                    <img src="../assets/paper_img/chet_faker_2.jpg" alt="Thumbnail Image" class="img-circle img-responsive">
-                    <h5>Harry Potter</h5>
-                    <p>How Well Do You Know 'Harry Potter'? Find out if you are a true Harry Potter fan by taking on this quiz</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-player">
-                    <img src="../assets/paper_img/flume.jpg" alt="Thumbnail Image" class="img-circle img-responsive">
-                    <h5>Will You Ever Get Married?</h5>
-                    <p>Will you ever find your true love? Curious? Take this quiz to find out.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-player">
-                    <img src="../assets/paper_img/banks.jpg" alt="Thumbnail Image" class="img-circle img-circle img-responsive">
-                    <h5>Banks <br />Music</h5>
-                    <p>You can write here details about one of your team members. You can give more details about what they do. Feel free to add some <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-player">
-                    <img src="../assets/paper_img/banks.jpg" alt="Thumbnail Image" class="img-circle img-circle img-responsive">
-                    <h5>Banks <br />Music</h5>
-                    <p>You can write here details about one of your team members. You can give more details about what they do. Feel free to add some <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                </div>
-            </div>
-        </div>
+    <div class="main">
+      <div class="section section-dark text-center landing-section">
+          <div class="container">
+              <h2>Featured Quizzes</h2>
+              <div class="col-md-4" ng-repeat="quiz in lc.definedQuiz">
+                  <div class="team-player">
+                      <a href="#"><img src="{{quiz.imageUrl}}" alt="Thumbnail Image" class="img-circle img-responsive" style="height: 120px;width: 120px;" ng-click="lc.showDefineQuiz(quiz)"></a>
+                      <h5 ng-bind="quiz.title"></h5>
+                      <p ng-bind="quiz.description"></p>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
+</div>
+
 
     <!-- <div class="section landing-section">
         <div class="container">
@@ -194,4 +187,3 @@
         </div>
         <div class="container"></div>
     </div> -->
-</div>
