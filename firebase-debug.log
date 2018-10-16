@@ -1,0 +1,29 @@
+[debug] [2018-10-16T17:25:37.985Z] ----------------------------------------------------------------------
+[debug] [2018-10-16T17:25:37.988Z] Command:       /usr/bin/node /usr/bin/firebase serve
+[debug] [2018-10-16T17:25:37.988Z] CLI Version:   5.0.0
+[debug] [2018-10-16T17:25:37.988Z] Platform:      linux
+[debug] [2018-10-16T17:25:37.988Z] Node Version:  v8.11.0
+[debug] [2018-10-16T17:25:37.988Z] Time:          Wed Oct 17 2018 01:25:37 GMT+0800 (+08)
+[debug] [2018-10-16T17:25:37.988Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-16T17:25:38.043Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-16T17:25:38.043Z] > authorizing via signed-in user
+[debug] [2018-10-16T17:25:38.043Z] [iam] checking project imquiz-001 for permissions ["firebase.projects.get"]
+[debug] [2018-10-16T17:25:38.046Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-16T17:25:38.046Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2018-10-16T17:25:39.724Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-16T17:25:39.773Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/imquiz-001:testIamPermissions  
+
+[debug] [2018-10-16T17:25:42.266Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-16T17:25:42.268Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/imquiz-001  
+ 
+[debug] [2018-10-16T17:25:44.295Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/usr/local/google/home/rommelp/dev/imquiz'...
+[info] 
+[debug] [2018-10-16T17:25:44.298Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/681826116394/clients/_:getWebAppConfig  
+ 
+[debug] [2018-10-16T17:25:45.015Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
