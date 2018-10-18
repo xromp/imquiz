@@ -25,7 +25,8 @@
     function LandingCtrl($scope, $location, $stateParams, $http){
         let vm = this;
         const DOMAIN = 'https://imquiz-001.firebaseio.com';
-        const HOSTED_DOMAIN = 'https://imquiz-001.firebaseapp.com/';
+        // const HOSTED_DOMAIN = 'https://imquiz-001.firebaseapp.com/';
+        const HOSTED_DOMAIN = $location.protocol()+'://'+$location.host()+'/';
         const HOME_PAGE = HOSTED_DOMAIN + 'home/';
         const ref = firebase.database().ref();
         const questionRef = ref.child('user-answered-questions');
@@ -34,6 +35,7 @@
         vm.shareLink = '';
         vm.mode = 'START_ANSWERING';
         vm.domain = HOSTED_DOMAIN;
+        console.log(HOSTED_DOMAIN);
 
         vm.init = function(){
             vm.userQuestionsId = $stateParams.id;
@@ -317,6 +319,7 @@
             });
             vm.userQuestioners.username = '';
             vm.userQuestioners.questions[0]['position'] = 'CURRENT';
+            window.scrollTo(0, 0);
             console.log(vm.userQuestioners);
         };
 
