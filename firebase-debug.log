@@ -1,0 +1,25 @@
+[debug] [2018-11-05T20:44:38.132Z] ----------------------------------------------------------------------
+[debug] [2018-11-05T20:44:38.134Z] Command:       /usr/bin/node /usr/bin/firebase serve
+[debug] [2018-11-05T20:44:38.134Z] CLI Version:   5.0.0
+[debug] [2018-11-05T20:44:38.134Z] Platform:      linux
+[debug] [2018-11-05T20:44:38.134Z] Node Version:  v8.11.0
+[debug] [2018-11-05T20:44:38.134Z] Time:          Tue Nov 06 2018 04:44:38 GMT+0800 (PST)
+[debug] [2018-11-05T20:44:38.134Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-11-05T20:44:38.140Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-11-05T20:44:38.141Z] > authorizing via signed-in user
+[debug] [2018-11-05T20:44:38.141Z] [iam] checking project imquiz-001 for permissions ["firebase.projects.get"]
+[debug] [2018-11-05T20:44:38.142Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/imquiz-001:testIamPermissions  
+
+[debug] [2018-11-05T20:44:39.499Z] <<< HTTP RESPONSE 200
+[debug] [2018-11-05T20:44:39.501Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/imquiz-001  
+ 
+[debug] [2018-11-05T20:44:40.748Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/usr/local/google/home/rommelp/dev/imquiz'...
+[info] 
+[debug] [2018-11-05T20:44:40.751Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/681826116394/clients/_:getWebAppConfig  
+ 
+[debug] [2018-11-05T20:44:41.280Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
